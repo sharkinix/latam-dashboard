@@ -51,5 +51,21 @@ pip install -r requerements.txt
 python manage.py migrate
 python manage.py runserver
 
+Luego abre tu navegador en 👉 http://127.0.0.1:8000/
+
+latam/
+│
+├── latam_data_insights/     # Proyecto Django principal
+│   ├── settings.py           # Configuración base
+│   ├── urls.py               # Enrutamiento general
+│   └── wsgi.py
+│
+├── templates/                # Plantillas HTML globales
+├── static/                   # Archivos estáticos (CSS, JS, imágenes)
+├── manage.py
+├── requirements.txt
+└── README.md
+
+
 
 
