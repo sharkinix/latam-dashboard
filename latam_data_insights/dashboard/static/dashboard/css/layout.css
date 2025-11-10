@@ -1,0 +1,24 @@
+/* =============================
+   layout.css – (Corregido)
+   ============================= */
+
+
+/* Grid de estadísticas */
+.stats {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* Sección de visuales */
+.visuals {
+    margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}

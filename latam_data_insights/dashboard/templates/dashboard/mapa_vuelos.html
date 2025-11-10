@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Radar LATAM</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <style>
+        body {
+            margin: 0;
+            background: #0d0d0f;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 100vh;
+            width: 100vw;
+        }
+        .leaflet-popup-content {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    // Crear mapa centrado en Sudamérica
+    const map = L.map("map").setView([-20, -70], 4);
+
+    // Capa del mapa (oscura para estilo LATAM)
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+    }).addTo(map);
+
+    let markers = {};
+
+    function actualizarVuelos() {
+        fetch("/api/vuelos-latam/")
+            .then(response => response.json())
+            .then(data => {
+
+                data.forEach(v => {
+                    const id = v.callsign;
+
+                    const lat = v.lat;
+                    const lon = v.lon;
+
+                    if (!lat || !lon) return;
+
+                    const popup = `
+                        <b>Vuelo: ${v.callsign}</b><br>
+                        País: ${v.pais}<br>
+                        Altitud: ${v.altitud || "N/A"} m<br>
+                        Velocidad: ${Math.round(v.velocidad || 0)} m/s<br>
+                        Rumbo: ${Math.round(v.rumbo || 0)}°
+                    `;
+
+                    // Si el marcador ya existe → actualizar posición
+                    if (markers[id]) {
+                        markers[id].setLatLng([lat, lon]).bindPopup(popup);
+
+                    } else {
+                        // Crear un nuevo marcador
+                        markers[id] = L.marker([lat, lon]).addTo(map);
+                        markers[id].bindPopup(popup);
+                    }
+                });
+            });
+    }
+
+    // Actualiza cada 15 segundos
+    actualizarVuelos();
+    setInterval(actualizarVuelos, 15000);
+</script>
+
+</body>
+</html>

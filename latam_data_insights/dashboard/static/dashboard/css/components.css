@@ -1,0 +1,227 @@
+/* =============================
+   components.css – Botones, tablas, etc.
+   ============================= */
+
+/* --- Cards --- */
+.card {
+    background-color: var(--latam-white);
+    border-radius: 14px;
+    padding: 1.6rem;
+    text-align: center;
+    box-shadow: 0 4px 8px var(--shadow-light);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card h2 {
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0 0 0.4rem;
+}
+
+.card p {
+    font-size: 2.3rem;
+    font-weight: 600;
+    color: var(--latam-pink);
+    margin: 0;
+}
+
+.card.main-kpi {
+    background-color: var(--latam-blue);
+    color: var(--latam-white);
+}
+
+.card.main-kpi p {
+    color: var(--latam-white);
+    font-size: 3.4rem;
+}
+
+/* --- Tabla de vuelos --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+/* Estilos de tabla que también faltaban */
+th {
+    background-color: var(--latam-blue);
+    color: var(--latam-white);
+    padding: 0.8rem;
+    font-size: 0.9rem;
+
+    /* Centrado de tabla */
+    text-align: center;
+    vertical-align: middle;
+}
+
+td {
+    padding: 0.8rem;
+    border-bottom: 1px solid #e0e0e0;
+
+    /* Centrado de tabla */
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Para alinear a la izquierda Origen/Destino */
+td.flag-align {
+    text-align: center;
+}
+
+tbody tr:hover {
+    background-color: rgba(232, 17, 75, 0.06);
+}
+
+
+/* --- Chart Card --- */
+.chart-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 18px;
+    box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.chart-container {
+    position: relative;
+    max-height: 400px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* --- Badges de Estado --- */
+.status-badge {
+    padding: 0.3rem 0.7rem;
+    border-radius: 14px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.status-on-time { background: #00b970; }
+.status-delayed { background: #ff9900; }
+.status-cancelled { background: var(--latam-pink); }
+
+/* --- Botón Añadir Vuelo --- */
+.btn-add {
+    background-color: var(--latam-pink);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    float: right;
+    transition: background 0.3s, transform 0.2s;
+}
+.btn-add:hover {
+    background-color: #b80f4a;
+    transform: scale(1.03);
+}
+
+/* --- Botones de Acción (Editar/Eliminar) --- */
+.btn-action {
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.edit-blue {
+    background-color: var(--latam-blue);
+    color: white;
+}
+
+.delete-red {
+    background-color: var(--latam-pink);
+    color: white;
+}
+
+.edit-blue:hover { background: rgb(10, 0, 50); }
+.delete-red:hover { background: rgb(180, 10, 60); }
+
+
+/* ================================================= */
+/* == ESTILOS PARA EL FORMULARIO (add/edit_flight) == */
+/* ================================================= */
+
+/* El contenedor principal del formulario */
+.form-card {
+    max-width: 700px; /* Ancho máximo del formulario */
+    margin: 2rem auto; /* ¡ESTO LO CENTRA EN LA PÁGINA! */
+
+    background-color: var(--latam-white);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+.form-card h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.form-card h2 i {
+    margin-right: 15px; /* Espacio para el ícono de + */
+}
+
+/* Estilos para el formulario (UNA SOLA COLUMNA) */
+.flight-form {
+    display: grid;
+    grid-template-columns: 1fr; /* Una sola columna para todo */
+    gap: 1.2rem; /* Espacio entre cada campo */
+}
+
+.flight-form label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: -5px; /* Acerca la etiqueta al campo de abajo */
+}
+
+.flight-form input[type="text"],
+.flight-form input[type="datetime-local"],
+.flight-form select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Contenedor para los botones */
+.form-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Botón de Guardar */
+.btn-guardar {
+    background-color: var(--latam-pink);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Botón de Cancelar (enlace) */
+.btn-cancelar {
+    color: var(--latam-pink);
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 0.95rem;
+}

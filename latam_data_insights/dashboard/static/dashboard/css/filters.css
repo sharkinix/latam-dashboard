@@ -1,0 +1,78 @@
+/* =============================
+   filters.css – (Corregido y Normalizado)
+   ============================= */
+
+.filters-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px var(--shadow-light);
+    margin-bottom: 2rem;
+}
+
+.filter-form {
+    display: flex;
+    gap: 1.3rem;
+    align-items: center;
+}
+
+.filter-form select {
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    background: #f9f9f9;
+}
+
+
+.filters-container.hidden {
+    display: none;
+}
+
+/* * ==================================================
+ * AQUÍ ESTÁ LA CORRECCIÓN:
+ * Aplicamos estilos base a AMBOS botones para que
+ * se vean idénticos.
+ * ==================================================
+*/
+.apply-button,
+.clear-button {
+    /* --- Normalización de Fuente --- */
+    /* Forzamos a ambos a heredar la fuente del body (Poppins) */
+    font-family: inherit;
+    /* Usamos un tamaño de fuente consistente */
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    /* --- Normalización de Modelo de Caja --- */
+    padding: 0.5rem 1rem;
+    min-width: 130px;
+    border-radius: 6px;
+    box-sizing: border-box; /* Clave para que el padding sea igual */
+    display: inline-block;  /* Clave para que <a> y <button> se vean igual */
+    text-align: center;
+
+    /* --- Normalización de Estilos --- */
+    border: none;
+    cursor: pointer;
+    text-decoration: none; /* Quita el subrayado del <a> */
+
+    /* --- Estilos de Color (Como pediste) --- */
+    background-color: var(--latam-pink);
+    color: white;
+}
+
+/* (Opcional: Si quieres que el botón "Limpiar"
+   sea gris, puedes descomentar esto)
+
+.clear-button {
+    background-color: #e0e0e0;
+    color: var(--text-dark);
+}
+*/
+
+
+@media (max-width: 768px) {
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

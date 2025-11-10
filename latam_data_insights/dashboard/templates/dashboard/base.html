@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LATAM Data Insights</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/filters.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/dark.css' %}">
+</head>
+
+<body>
+    <div id="overlay" class="overlay"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="{% static 'dashboard/img/logo.png' %}" alt="LATAM" class="sidebar-logo">
+        </div>
+        <ul>
+            <li onclick="location.href='{% url 'dashboard_home' %}'">
+                <i class="fas fa-chart-line"></i><span> Dashboard</span>
+            </li>
+            <li onclick="location.href='{% url 'add_flight' %}'">
+                <i class="fa-solid fa-plane-departure fa-beat-fade"></i><span> Agregar Vuelo</span>
+            </li>
+            <li onclick="location.href='{% url 'mapa_vuelos' %}'">
+                <i class="fas fa-radar"></i><span> Radar LATAM</span>
+            </li>
+            <li onclick="toggleFilters()">
+                <i class="fas fa-filter"></i><span> Filtros</span>
+            </li>
+            <li class="theme-toggle-li">
+                <i class="fa-solid fa-moon"></i>
+                <span> Modo Oscuro</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="topbar">
+        <div id="menu-toggle" class="menu-toggle-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+
+    <main class="content-area">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const toggleBtn = document.getElementById("menu-toggle");
+        const topbar = document.querySelector(".topbar");
+        const content = document.querySelector(".content-area");
+
+        sidebar.classList.add("collapsed");
+        topbar.classList.add("collapsed");
+        content.classList.add("collapsed");
+
+        toggleBtn.onclick = () => {
+            const collapsed = sidebar.classList.toggle("collapsed");
+            topbar.classList.toggle("collapsed");
+            content.classList.toggle("collapsed");
+
+            if (overlay) {
+                if (collapsed) {
+                    overlay.classList.remove("show");
+                    toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    toggleBtn.classList.remove("rotated");
+                } else {
+                    overlay.classList.add("show");
+                    toggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    toggleBtn.classList.add("rotated");
+                }
+            }
+        };
+
+        if (overlay) {
+            overlay.onclick = () => {
+                sidebar.classList.add("collapsed");
+                topbar.classList.add("collapsed");
+                content.classList.add("collapsed");
+
+                overlay.classList.remove("show");
+                toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                toggleBtn.classList.remove("rotated");
+            };
+        }
+
+        function toggleFilters() {
+            const filterSection = document.getElementById("filters-section");
+            if (filterSection) {
+                filterSection.classList.toggle("hidden");
+            }
+        }
+    </script>
+
+    {% block scripts %}{% endblock %}
+    <script src="{% static 'dashboard/js/theme-toggle.js' %}?v=10"></script>
+</body>
+</html>

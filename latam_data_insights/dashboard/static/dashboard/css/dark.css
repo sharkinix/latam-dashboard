@@ -1,0 +1,120 @@
+/* =============================
+   dark.css
+   ============================= */
+
+/* Variables para el modo oscuro */
+body.dark {
+    --latam-white: #f3f3f3; /* Fondo oscuro principal */
+    --background-light: #0e0e0f; /* Fondo aún más oscuro para el sidebar */
+    --text-dark: #e0e0e0; /* Texto claro */
+    --shadow-light: rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+}
+
+/* Base body */
+body.dark {
+    background-color: var(--background-light);
+    color: var(--text-dark);
+}
+
+/* Sidebar y Topbar */
+/* No necesitan cambios adicionales si ya se ven bien */
+
+/* Cards generales */
+body.dark .card {
+    background-color: #252528; /* Gris oscuro para las tarjetas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: var(--text-dark);
+}
+
+body.dark .card p {
+    color: var(--text-dark); /* Asegura que el texto de los KPIs sea claro */
+}
+
+/* Card KPI principal (azul) */
+body.dark .card.main-kpi {
+    background-color: #252528; /* Se mantiene el azul oscuro de LATAM */
+    color: var(--text-dark);
+}
+
+body.dark .card.main-kpi p {
+    color: var(--text-dark);
+
+}
+
+/* Tabla */
+body.dark table {
+    color: var(--text-dark);
+}
+
+body.dark th {
+    background-color: #1a1a1d; /* Encabezado de tabla más oscuro */
+    color: var(--latam-white);
+}
+
+body.dark td {
+    border-bottom: 1px solid #333333; /* Bordes más oscuros */
+}
+
+body.dark tbody tr:hover {
+    background-color: rgba(232, 17, 75, 0.15); /* Hover ligeramente rosa */
+}
+
+/* Filtros */
+body.dark .filters-container {
+    background-color: #252528; /* Fondo de filtros oscuro */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+body.dark .filter-form select {
+    background: #333333;
+    color: var(--text-dark);
+    border-color: #555555;
+}
+
+/* Botones de filtros */
+body.dark .apply-button,
+body.dark .clear-button {
+    background-color: var(--latam-pink); /* Mantener el rosa para destacar */
+    color: white;
+}
+/* Si quieres el botón "Limpiar" gris en modo oscuro */
+body.dark .clear-button {
+    background-color: #dd1048;
+    color: white;
+}
+body.dark .apply-button:hover,
+body.dark .clear-button:hover {
+    background-color: #666666;
+}
+
+
+/* --- Estilos del Formulario en Modo Oscuro --- */
+
+body.dark .form-card {
+    background-color: #252528; /* Fondo de la tarjeta del formulario (gris oscuro) */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: var(--text-dark); /* Texto de las etiquetas claro */
+}
+
+body.dark .form-card h2 {
+    color: var(--text-dark); /* Título del formulario claro */
+}
+
+body.dark .flight-form input[type="text"],
+body.dark .flight-form input[type="datetime-local"],
+body.dark .flight-form select {
+    background-color: #333333; /* Fondo de los inputs y select más oscuro */
+    color: var(--text-dark); /* Texto de los inputs claro */
+    border: 1px solid #555555; /* Borde más visible */
+}
+
+body.dark .btn-guardar {
+    background-color: var(--latam-pink);
+    color: white;
+}
+
+body.dark .btn-cancelar {
+    color: var(--latam-pink);
+}
+
+

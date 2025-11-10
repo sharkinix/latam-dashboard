@@ -1,0 +1,36 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+<div class="form-card">
+    <h2><i class="fas fa-edit"></i> Editar Vuelo {{ form.instance.flight_code }}</h2>
+
+    <form method="POST" class="flight-form">
+        {% csrf_token %}
+
+        <label for="{{ form.flight_code.id_for_label }}">Flight code:</label>
+        {{ form.flight_code }}
+
+        <label for="{{ form.origin.id_for_label }}">Origin:</label>
+        {{ form.origin }}
+
+        <label for="{{ form.destination.id_for_label }}">Destination:</label>
+        {{ form.destination }}
+
+        <label for="{{ form.departure_time.id_for_label }}">Departure time:</label>
+        {{ form.departure_time }}
+
+        <label for="{{ form.arrival_time.id_for_label }}">Arrival time:</label>
+        {{ form.arrival_time }}
+
+        <label for="{{ form.status.id_for_label }}">Status:</label>
+        {{ form.status }}
+
+        <div class="form-buttons">
+            <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            <a href="{% url 'dashboard_home' %}" class="btn-cancelar">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+<h2>Vuelos LATAM Detectados</h2>
+
+{% if vuelos %}
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Vuelo</th>
+        <th>País</th>
+        <th>Latitud</th>
+        <th>Longitud</th>
+        <th>Altitud</th>
+        <th>Velocidad</th>
+        <th>Rumbo</th>
+    </tr>
+
+    {% for v in vuelos %}
+    <tr>
+        <td>{{ v.callsign }}</td>
+        <td>{{ v.pais }}</td>
+        <td>{{ v.lat }}</td>
+        <td>{{ v.lon }}</td>
+        <td>{{ v.altitud }}</td>
+        <td>{{ v.velocidad }}</td>
+        <td>{{ v.rumbo }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No hay vuelos LATAM en este momento.</p>
+{% endif %}

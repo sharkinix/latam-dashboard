@@ -1,0 +1,169 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="stats">
+    <div class="card wide main-kpi">
+        <h2>Puntualidad General</h2>
+        <p>{{ punctuality }}<span>%</span></p>
+    </div>
+    <div class="card"><h2>Total de Vuelos</h2><p>{{ total }}</p></div>
+    <div class="card"><h2>Vuelos a Tiempo</h2><p>{{ on_time }}</p></div>
+    <div class="card"><h2>Retrasados</h2><p>{{ delayed }}</p></div>
+    <div class="card"><h2>Cancelados</h2><p>{{ cancelled }}</p></div>
+</section>
+
+<section class="filters-container" id="filters-section">
+    <form method="get" action="{% url 'dashboard_home' %}" class="filter-form">
+        <label for="origin">Origen:</label>
+        <select name="origin" id="origin">
+            <option value="">-- Todos los Orígenes --</option>
+            {% for origin in available_origins %}
+                <option value="{{ origin }}" {% if origin == selected_origin %}selected{% endif %}>
+                    {{ origin }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="destination">Destino:</label>
+        <select name="destination" id="destination">
+            <option value="">-- Todos los Destinos --</option>
+            {% for dest in available_destinations %}
+                <option value="{{ dest }}" {% if dest == selected_destination %}selected{% endif %}>
+                    {{ dest }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="apply-button">Aplicar Filtros</button>
+
+        {% if selected_origin or selected_destination %}
+            <a href="{% url 'dashboard_home' %}" class="clear-button">Limpiar Filtros</a>
+        {% endif %}
+    </form>
+</section>
+
+<section class="visuals">
+    <div class="card chart-card">
+        <h2>Distribución de Estados</h2>
+        <div class="chart-container">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+</section>
+
+<section class="list">
+    <h2>
+        Listado de Vuelos Recientes
+        <a href="{% url 'add_flight' %}" class="btn-add">➕ Agregar Vuelo</a>
+    </h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Cód. Vuelo</th>
+                <th>Origen</th>
+                <th>Destino</th>
+                <th>Salida</th>
+                <th>Llegada</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for flight in flights %}
+            <tr>
+                <td>{{ flight.flight_code }}</td>
+
+                <td class="flag-align">
+                    {% if flight.origin_country %}
+                        <span class="flag-icon flag-icon-{{ flight.origin_country }}"></span>
+                    {% endif %}
+                    {{ flight.origin }}
+                </td>
+
+                <td>
+                    {% if flight.destination_country %}
+                        <span class="flag-icon flag-icon-{{ flight.destination_country }}"></span>
+                    {% endif %}
+                    {{ flight.destination }}
+                </td>
+
+                <td>{{ flight.departure_time|date:"H:i" }}</td>
+                <td>{{ flight.arrival_time|date:"H:i" }}</td>
+
+                <td>
+                    <span class="status-badge status-{{ flight.status|slugify }}">
+                        {{ flight.status }}
+                    </span>
+                </td>
+
+                <td class="action-buttons">
+                    <a href="{% url 'edit_flight' pk=flight.id %}" class="btn-action edit-blue">Editar</a>
+                    <a href="{% url 'delete_flight' flight.id %}"
+                       class="btn-action delete-red"
+                       onclick="return confirm('¿Seguro que deseas eliminar el vuelo {{ flight.flight_code }}?')">
+                       Eliminar
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7">No hay vuelos registrados</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section class="analysis-table list">
+    <h2>Rendimiento por Aeropuerto de Origen</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Origen</th>
+                <th>Vuelos Totales</th>
+                <th>Puntualidad</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for airport in performance_by_origin %}
+            <tr>
+                <td>
+                    {% if airport.origin_country %}
+                        <span class="flag-icon flag-icon-{{ airport.origin_country }}"></span>
+                    {% endif %}
+                    {{ airport.origin }}
+                </td>
+                <td>{{ airport.total_origin_flights }}</td>
+                <td>{{ airport.punctuality_rate }}%</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3">No hay datos de rendimiento.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const ctx = document.getElementById('statusChart').getContext('2d');
+    const onTime = {{ on_time }};
+    const delayed = {{ delayed }};
+    const cancelled = {{ cancelled }};
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['A Tiempo', 'Retrasados', 'Cancelados'],
+            datasets: [{
+                data: [onTime, delayed, cancelled],
+                backgroundColor: ['#00b970', '#ff9900', 'rgb(232, 17, 75)']
+            }]
+        }
+    });
+</script>
+{% endblock %}
